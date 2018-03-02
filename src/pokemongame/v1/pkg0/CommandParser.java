@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pokemongame.v1.pkg0;
+package pokemongame_v.pkg2;
 
 /**
  *
  * @author Raweeroj
  */
 import java.util.Scanner;
+import java.util.Random; 
 public class CommandParser {
         private PokemonFarm pokemonFarm;
 	private Scanner commandScanner;
 	private boolean isRunning;
 	private String type;
+        private Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
 
 	public CommandParser(PokemonFarm pokemonFarm){
 		this.pokemonFarm = pokemonFarm;
@@ -25,19 +28,16 @@ public class CommandParser {
 	public void run(){
 		isRunning = true;
 
-		System.out.println("-----------Welcome to Pokemon Game-----------");
 		while(isRunning){
-                        System.out.println("---------------------------------------------");
+                        System.out.println("=================================================");
 			System.out.println("Enter commands:");
-                        System.out.println("[select][list][feed][ex][walk][sleep][quit]");
+                        System.out.println("[list][feed][ex][walk][sleep][q/uit]");
                         System.out.print(": ");
 			String command = commandScanner.next();
-			if(command.equals("quit")){
+			if(command.equals("q")){
 				isRunning = false;
-				System.out.println("Good bye, See you next time.");
+                               
 			}
-			else if(command.equals("select"))
-                            addPokemon();
 			else if(command.equals("list"))
                             listPokemons();
 			else if(command.equals("feed"))
@@ -52,15 +52,8 @@ public class CommandParser {
 
 	}
 
-	private void addPokemon(){
-		commandScanner.nextLine();
-                System.out.println("---------------------------------------------");
-		System.out.println("->Select Pokemon");
-		System.out.println("  |-->lugia");
-                System.out.println("  |-->Groudon");
-                System.out.println("---------------------------------------------");
-		System.out.print("Choose it: ");
-		String pokemonType = commandScanner.next();
+	private void addPokemon(String monName){
+                System.out.println(monName);
 		System.out.print("Input Name: ");
 		String name = commandScanner.next();
 		System.out.print("Input weight(kg): ");
@@ -68,14 +61,15 @@ public class CommandParser {
 		System.out.print("Input step length: ");
 		float stepLength = commandScanner.nextFloat();
 
-		if(pokemonType.equals("lugia")){
+		if(monName.equals("lugia")){
 			Lugia lugia = new Lugia(name, weight, stepLength);
 			pokemonFarm.addPokemon(lugia);
 		}
-                else if(pokemonType.equals("groudon")){
+                else if(monName.equals("groudon")){
 			Groudon groudon = new Groudon(name, weight, stepLength);
 			pokemonFarm.addPokemon(groudon);
 		}
+                run();
 	}
 
 	private void listPokemons(){
@@ -127,4 +121,131 @@ public class CommandParser {
 			this.pokemonFarm.sleep(name);
 		}
 	}
+        
+        
+        //catch pokemon
+        public void intoForrest(){
+                String name[] = {"Lugia","Groudon"};
+                String monName = name[(int)rand.nextInt(3)];
+                int step = (int) (Math.random()*10);
+                System.out.println("=================================================");
+                try {
+
+                    Thread.sleep(500);
+                    System.out.print(".");
+                    Thread.sleep(500);
+                    System.out.print(".");
+                    Thread.sleep(500);
+                    System.out.print(".");
+                    Thread.sleep(500);
+                    System.out.println("วันหนึ่งฉันเดินเข้าป่า");
+                } catch (InterruptedException e) {
+                    }
+                int i = 0;
+                while(i < step){
+                try {
+                    System.out.println(".");
+                    Thread.sleep((long) (Math.random()*1000));            
+                    } 
+                catch (InterruptedException e) {
+                        e.printStackTrace();
+                }
+                 i++;            
+                }
+                System.out.println("step walk = "+step);
+                System.out.println("Found it --->"+ monName +"<--- !!");
+        
+                catchMon(monName);
+        }
+        
+        private void catchMon(String monName){
+        
+                int mood = rand.nextInt(10)+1;
+                int ball = selectBall();
+                int result = 0;
+                int i = 0;
+                int step = (int)Math.random()*10;
+                while(i < step){
+                    try {
+                        System.out.println(".");
+                        Thread.sleep((long) (Math.random()*1000));            
+                        } 
+                    catch (InterruptedException e) {
+                            e.printStackTrace();
+                    }
+                    i++;            
+                }
+                if(ball==1){
+                        result = mood*8;
+                }
+                else if(ball==2){
+                        result = mood*9; 
+                }
+                else if(ball==3){
+                        result = mood*10; 
+                }
+                try {
+                        Thread.sleep(500);
+                        System.out.println(".");
+                        Thread.sleep(500);
+                        System.out.println(".");
+                        Thread.sleep(500);
+                        System.out.println(".");
+                } catch (InterruptedException e) {
+                }
+                this.captureSuccess(result, monName);
+        }
+        
+       private void captureSuccess(int result, String monName){
+        if(result >= 50){       
+            System.out.println("Success");
+            System.out.println("===============================================");
+            addPokemon(monName);
+        }
+        else{
+		
+                System.out.println("Fail");
+                try {
+                    Thread.sleep(500);
+                    System.out.print(". ");
+                    Thread.sleep(500);
+                    System.out.print(". ");
+                    Thread.sleep(500);
+                    System.out.print(". ");
+                    Thread.sleep(500);
+                    System.out.println("Pokemon has gone !!!");
+                } catch (InterruptedException e) {
+                }       
+        System.out.println("==================================================");
+        }
+    }
+    
+    private int selectBall(){
+        System.out.println("\nChoose Ball:");
+        System.out.println("1 is Pokeball");
+        System.out.println("2 is Masterball");
+        System.out.println("3 is Ultraball");
+        System.out.print(">: ");
+        int ball = sc.nextInt();
+        return ball;
+    }
+    
+    private void evolutionAddPokemon(String pokemonType)
+  {
+    System.out.print("Name:");
+    String name = this.sc.nextLine();
+    float weight = (float)Math.random() * 100.0F;
+    float stepLength = (float)Math.random() * 5.0F;
+    if(pokemonType.equals("Wartortle"))
+    {
+      Lugia lugia = new Lugia(name, weight*2F, stepLength*2F);
+      this.pokemonFarm.addPokemon(lugia);
+    }
+    if(pokemonType.equals("Blastoise"))
+    {
+      Groudon groudon = new Groudon(name, weight*3F, stepLength*3F);
+      this.pokemonFarm.addPokemon(groudon);
+    }
+
+  }
 }

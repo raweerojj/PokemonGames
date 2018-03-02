@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pokemongame.v1.pkg0;
+package pokemongame_v.pkg2;
 
 /**
  *
  * @author Raweeroj
  */
 public class Pokemon {
-        private String name;
+    private String name;
 	private float weight;
 	private float stepLength;
 	private int step;
@@ -43,14 +43,14 @@ public class Pokemon {
 	public void eat(){
 		weight += gainingWeightStep;
                 if(energy <= 99){
-                    energy += 5;
+                    energy += 10;
                 }
 		
 	}
 	
 	public void exercise() {
 		weight -= gainingWeightStep;
-		energy -= 2;
+		energy -= 30;
 	}
 	
 	public void sleep() {

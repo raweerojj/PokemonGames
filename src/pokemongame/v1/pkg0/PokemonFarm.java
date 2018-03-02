@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pokemongame.v1.pkg0;
+package pokemongame_v.pkg2;
 
 /**
  *
@@ -86,4 +86,9 @@ public class PokemonFarm {
 			}
 		}
 	}
+        
+        public void  removePokemon(int index){
+                pokemons.remove(index);
+        }
 }
+
